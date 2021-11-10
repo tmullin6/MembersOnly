@@ -23,6 +23,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const signupRouter = require('./routes/signup');
 const loginRouter = require('./routes/login');
+const messageRouter = require('./routes/message');
 
 var app = express();
 
@@ -80,6 +81,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/', signupRouter);
 app.use('/',loginRouter);
+app.use('/message', messageRouter);
+
 
 
 app.post("/login", passport.authenticate("local", {

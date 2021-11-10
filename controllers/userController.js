@@ -53,13 +53,6 @@ exports.user_create_post= [
         res.render('login-form',{title: "Members Only Board"});
     };
 
-    exports.user_login_post=function(req,res){
-
-       
-          
-        
-
-    }
 
     exports.user_logout=function(req,res,next){
         req.logout();
