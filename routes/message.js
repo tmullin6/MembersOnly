@@ -7,8 +7,8 @@ router.get('/create',message_controller.message_create_get);
 
 router.post('/create',message_controller.message_create_post);
 
-router.get('/delete',message_controller.message_delete_get);
+router.get('/delete/:id',message_controller.message_delete_get);
 
-router.post('/delete',message_controller.message_delete_post);
+router.post('/delete/:id',message_controller.message_delete_post);
 
 module.exports = router;

@@ -18,7 +18,12 @@ exports.user_create_post= [
     .isAlphanumeric().withMessage("Last Name Can Only Contain Alphanumeric Characters"),
     body('username').trim().isLength({min:1}).escape().withMessage("Username Must Be Specified"),
     body('password').trim().isLength({min:1}).escape().withMessage("Password Must Be Specified"),
-    body('password_confirm').trim().isLength({min:1}).escape().withMessage("Password Must Be Specified"),
+    body('password_confirm').custom((value, { req })=> {
+        if (value !== req.body.password) {
+          throw new Error('Password confirmation does not match password');
+        };
+        return true;
+    }),
 
     (req,res,next)=>{
 
@@ -29,17 +34,14 @@ exports.user_create_post= [
             return;
         };
 
-        if(req.body.password !== req.body.password_confirm){
-            res.render("signup-form",{title: "Speak Your Mind", error: "Password must match"});
-            return;
-        };
-
         let user = new User({
             first_name: req.body.first_name,
             last_name: req.body.last_name,
             username: req.body.username,
             password: req.body.password
-        })
+        });
+
+       
 
         bcrypt.hash(user.password,10,(err,hashedpassword)=>{
             if(err){return next(err)};
@@ -53,11 +55,12 @@ exports.user_create_post= [
             });
         });
         
-    }];
+    }
+]
 
-    exports.user_login_get=function(req,res,next){
-        res.render('login-form',{title: "Speak Your Mind"});
-    };
+exports.user_login_get=function(req,res,next){
+    res.render('login-form',{title: "Speak Your Mind"});
+};
 
 
     exports.user_logout=function(req,res,next){
@@ -66,13 +69,39 @@ exports.user_create_post= [
         res.redirect('/');
     };
 
-    exports.user_upgrade_get= function(req,res){
-        res.send('USER UPGRADE GET NOT IMPLEMENTED');
+    exports.user_upgrade_get= function(req,res,next){
+         let passcode = 42069;
+
+         res.render('user-upgrade', {title: "Speak Your Mind", user: req.user, passcode: passcode})
     };
 
-    exports.user_upgrade_post=function(req,res){
-        res.send('USER UPGRADE POST NOT IMPLEMENTED');
-    };
+    exports.user_upgrade_post=[
+        
+        body('passcode').trim().isLength({min:1}).escape().withMessage("Incorrect Passcode"),
+
+        (req,res,next)=>{
+
+            let passcode = 42069;
+
+            const errors= validationResult(req);
+
+            if(!errors.isEmpty()){
+                res.render('user-upgrade', {title: "Speak Your Mind", user: req.user, passcode: passcode, errors: errors.array()});
+                return;
+            };
+
+            if(req.body.passcode != passcode.toString()){
+                res.render('user-upgrade', {title: "Speak Your Mind", user: req.user, passcode: passcode});
+                return;
+            }
+            else {
+                User.findByIdAndUpdate(req.user._id,{"membership_status":"User"},{},function(err){
+                    if(err){return(next(err))};
+
+                    res.redirect('/');
+                });
+            };
+    }];
 
    
 

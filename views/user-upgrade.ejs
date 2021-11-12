@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Upgrade User Status</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/stylesheets/style.css">
+    </head>
+
+    <body>
+    
+            <div class="header">
+                <div class="title">
+                  <a href="/"><h1><%= title %></h1></a>
+                </div> 
+                <div class="links">
+                  <% if(typeof(user)=="object" && user) { %>
+                    <p>Welcome Back <%= user.username %></p>
+                    <a href='/logout'><button>Log Out</button></a>
+                    <% } else {%>
+                    <a href="/login"><button>Sign In</button></a>
+                    <a href="/signup"><button>Join</button></a>
+          
+                    <% } %>
+                </div>
+              </div>
+
+        <div class="upgrade">
+            <h1><%= user.username%>, Prove you are not a robot.<br>Enter the following passcode below to get access to message board posting</h1><br>
+                <h2><%= passcode %> </h2>
+            
+            <form action="/user/join" method="POST">
+                <label for="passcode">Enter Passcode:</label><br>
+                <input type="text" name="passcode" placeholder="Enter Username" required><br>
+                <input type="submit" value="Submit">
+            </form> 
+
+            <% if(typeof(errors)=='object' && errors) {%>
+
+                <ul>
+                    <% for(let i=0; i<errors.length; i++) { %>
+                        <li><%= errors[i].msg%></li>
+                        <% } %>
+                </ul>
+
+                <% } %>
+
+        </div>
+    </body>
+</html>

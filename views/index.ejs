@@ -39,6 +39,10 @@
 
       <% if(typeof(messages)=='object' && messages) { %>
 
+        <% if(messages.length<1) { %>
+          <h1>No Messages To Display</h1>
+        <% } else { %>
+
         <% for(let i=0; i<messages.length; i++) { %> 
 
           <div class="message">
@@ -56,12 +60,13 @@
             </div>
             <div class="message-footer">
               <% if(typeof(user)=='object'&& user && user.membership_status === "Admin") { %>
-                <a href="/message/delete"><button>Delete Post</button></a>
+                <a href="/message/delete/<%= messages[i]._id%>"><button>Delete Post</button></a>
                 <% } %>
 
             </div>
           </div>
         
+        <% } %>
         <% } %>
       <% } %>
 

@@ -84,7 +84,6 @@ app.use('/',loginRouter);
 app.use('/message', messageRouter);
 
 
-
 app.post("/login", passport.authenticate("local", {
   successRedirect: "/",
   failureRedirect: "/login"
