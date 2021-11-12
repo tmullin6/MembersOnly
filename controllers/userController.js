@@ -6,7 +6,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const {body,validationResult} = require('express-validator');
 
 exports.user_create_get= function(req,res,next){
-    res.render("signup-form", {title: "Speak Your Mind"});
+    res.render("signup-form", {title: "Create New User"});
 };
 
 exports.user_create_post= [
@@ -30,7 +30,7 @@ exports.user_create_post= [
         const errors = validationResult(req);
 
         if(!errors.isEmpty()){
-            res.render("signup-form",{title: "Speak Your Mind", errors: errors.array()});
+            res.render("signup-form",{title: "Create New User", errors: errors.array()});
             return;
         };
 
@@ -51,7 +51,7 @@ exports.user_create_post= [
             user.save(err=>{
                 if(err){return next(err)};
     
-                res.redirect('/');
+                res.redirect('/')
             });
         });
         
@@ -59,7 +59,7 @@ exports.user_create_post= [
 ]
 
 exports.user_login_get=function(req,res,next){
-    res.render('login-form',{title: "Speak Your Mind"});
+    res.render('login-form',{title: "Login"});
 };
 
 
@@ -70,9 +70,16 @@ exports.user_login_get=function(req,res,next){
     };
 
     exports.user_upgrade_get= function(req,res,next){
+
+        if(!req.user){
+            let error = new Error("Please Log In To Access");
+            error.status=404;
+            return next(error);
+        };
+
          let passcode = 42069;
 
-         res.render('user-upgrade', {title: "Speak Your Mind", user: req.user, passcode: passcode})
+         res.render('user-upgrade', {title: "Join The Club", user: req.user, passcode: passcode})
     };
 
     exports.user_upgrade_post=[
@@ -86,12 +93,12 @@ exports.user_login_get=function(req,res,next){
             const errors= validationResult(req);
 
             if(!errors.isEmpty()){
-                res.render('user-upgrade', {title: "Speak Your Mind", user: req.user, passcode: passcode, errors: errors.array()});
+                res.render('user-upgrade', {title: "Join The Club", user: req.user, passcode: passcode, errors: errors.array()});
                 return;
             };
 
             if(req.body.passcode != passcode.toString()){
-                res.render('user-upgrade', {title: "Speak Your Mind", user: req.user, passcode: passcode});
+                res.render('user-upgrade', {title: "Join The Club", user: req.user, passcode: passcode});
                 return;
             }
             else {

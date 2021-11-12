@@ -8,11 +8,13 @@
 
     <div class="header">
       <div class="title">
-        <a href="/"><h1><%= title %></h1></a>
+        <a href="/"><h1>Speak Your Mind</h1></a>
       </div> 
       <div class="links">
         <% if(typeof(user)=="object" && user) { %>
-          <p>Welcome Back <%= user.username %></p>
+          <div class="user">
+            Welcome Back <%= user.username %>
+          </div>
           <a href='/logout'><button>Log Out</button></a>
           <% } else {%>
           <a href="/login"><button>Sign In</button></a>
@@ -22,28 +24,31 @@
       </div>
     </div>
 
+    <div class="form-title">
+    <h1>Delete This Message?</h1>
+      </div>
     <div class="message-info">
 
-      <h1>Delete This Message?</h1>
+      
 
-        <p>Title:</p>
+        <h3><strong>Title:</strong></h3>
         <p><%= message.title %></p>
         
-        <p>User:</p>
+        <h3><strong>User:</strong></h3>
         <p><%= message.author %></p>
 
-        <p>Posted On:</p>
+        <h3><strong>Posted On:</strong></h3>
         <p><%= message.formatted_timestamp %></p>
 
-        <p>Message Body: </p>
+        <h3><strong>Message Body:</strong> </h3>
 
         <p><%= message.text %></p>
     
     </div>
 
-    <div>
+    <div class="delete">
         <form action="" method="POST">
-            <input type="submit" value="Delete Post">
+            <input class="delete-button" type="submit" value="Delete Post">
         </form>
     </div>
 

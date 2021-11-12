@@ -8,11 +8,13 @@
 
     <div class="header">
       <div class="title">
-        <a href="/"><h1><%= title %></h1></a>
+        <a href="/"><h1>Speak Your Mind</h1></a>
       </div> 
       <div class="links">
         <% if(typeof(user)=="object" && user) { %>
-          <p>Welcome Back <%= user.username %></p>
+          <div class="user">
+            Welcome Back <%= user.username %>
+          </div>
           <a href='/logout'><button>Log Out</button></a>
           <% } else {%>
           <a href="/login"><button>Sign In</button></a>
@@ -22,17 +24,33 @@
       </div>
     </div>
 
-    <div class="site-desc">
-      <p>
-        "Speak Your Mind" is a place where members can post whatever is on their minds in an anonymous setting.<br>
-        Messages are up for everyone to see, but if you want to join the club and see info such as post authors, <br>
-        and have the ability to post to the board yourself, feel free to join the club.
-      </p>
-    </div>
+    <div class="app-body">
+      <div class="site-desc">
+        <p>
+          "Speak Your Mind" is a place where members can post whatever is on their minds in an anonymous setting.<br>
+          Messages are up for everyone to see, but if you want to join the club and see info such as post authors, <br>
+          and have the ability to post to the board yourself, feel free to join the club.
+        </p>
+
+        <% if(typeof(user)=='object' && user && user.membership_status != "Visitor") { %>
+
+          <div class='message-links'>
+            <a href='/message/create'><button>Create New Message</button></a>
+          </div>
+    
+          <% } %> 
+          <% if(typeof(user)=='object' && user && user.membership_status === "Visitor") { %>
+            <div class='message-links'>
+            <p>Want To Post To The Board?</p>
+            <a href="/user/join"><button>Join The Club</button></a>
+          </div>
+          <% } %>
+
+      </div>
 
     
 
-
+    
     <div class="message-list">
 
       <h1>Message Board:</h1>
@@ -48,19 +66,20 @@
           <div class="message">
             <div class="message-header">
             <% if(typeof(user)=='object'&& user && user.membership_status != "Visitor") { %>
-              <p class="message-author"><%= messages[i].author %> posted:</p><br>
+              <p class="message-author"><%= messages[i].author %> posted:</p>
             <% } else {  %>
-              <p>Anonymous posted:</p><br>
+              <p class="message-author">Anonymous posted:</p><br>
             <% } %>
-              <p><%= messages[i].formatted_timestamp%></p>
+              
             </div>
             <div class= "message-body">
-              <p class="message-title"> <%= messages[i].title%></p>
-              <p class="message-text"><%= messages[i].text %></p>
+              <h3 class="message-title"> <%= messages[i].title%></h3>
+              <p class="message-text">-<%= messages[i].text %></p>
             </div>
             <div class="message-footer">
+              <p>Posted on: <%= messages[i].formatted_timestamp%></p>
               <% if(typeof(user)=='object'&& user && user.membership_status === "Admin") { %>
-                <a href="/message/delete/<%= messages[i]._id%>"><button>Delete Post</button></a>
+                <a href="/message/delete/<%= messages[i]._id%>"><button class="delete-post">Delete Post</button></a>
                 <% } %>
 
             </div>
@@ -72,18 +91,12 @@
 
     </div>
 
-    <% if(typeof(user)=='object' && user && user.membership_status != "Visitor") { %>
+     
+     
 
-      <div class='message-links'>
-        <a href='/message/create'><button>Create New Message</button></a>
-      </div>
+    
 
-      <% } %> 
-      <% if(typeof(user)=='object' && user && user.membership_status === "Visitor") { %>
-        <p>Want To Post To The Board?</p>
-        <a href="/user/join"><button>Join The Club</button></a>
-      <% } %>
    
-
+    </div>
   </body>
 </html>

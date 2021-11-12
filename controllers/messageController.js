@@ -11,7 +11,7 @@ exports.message_create_get=function(req,res,next){
         return next(error);
     };
 
-    res.render('message-form',{title: "Create New Message", user: req.user});
+    res.render('message-form',{title: "Create New Post", user: req.user});
 };
 
 exports.message_create_post= [
@@ -57,7 +57,7 @@ exports.message_delete_get= function(req,res, next){
     Message.findById(req.params.id).exec(function(err,message){
         if(err){return next(err)};
 
-        res.render("message-delete",{title: "Speak Your Mind", message: message});
+        res.render("message-delete",{title: "Delete Message", user:req.user, message: message});
     });
 };
 

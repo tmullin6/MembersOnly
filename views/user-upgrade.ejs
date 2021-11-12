@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>Upgrade User Status</title>
+        <title><%= title %></title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="/stylesheets/style.css">
     </head>
@@ -11,30 +11,34 @@
     
             <div class="header">
                 <div class="title">
-                  <a href="/"><h1><%= title %></h1></a>
+                  <a href="/"><h1>Speak Your Mind</h1></a>
                 </div> 
                 <div class="links">
-                  <% if(typeof(user)=="object" && user) { %>
-                    <p>Welcome Back <%= user.username %></p>
-                    <a href='/logout'><button>Log Out</button></a>
-                    <% } else {%>
-                    <a href="/login"><button>Sign In</button></a>
-                    <a href="/signup"><button>Join</button></a>
-          
-                    <% } %>
-                </div>
+                    <% if(typeof(user)=="object" && user) { %>
+                      <div class="user">
+                        Welcome Back <%= user.username %>
+                      </div>
+                      <a href='/logout'><button>Log Out</button></a>
+                      <% } else {%>
+                      <a href="/login"><button>Sign In</button></a>
+                      <a href="/signup"><button>Join</button></a>
+            
+                      <% } %>
+                  </div>
               </div>
 
         <div class="upgrade">
             <h1><%= user.username%>, Prove you are not a robot.<br>Enter the following passcode below to get access to message board posting</h1><br>
-                <h2><%= passcode %> </h2>
-            
+                <h2 class="passcode"><%= passcode %> </h2>
+        </div>
+        
+        <div class="upgrade-form">
             <form action="/user/join" method="POST">
                 <label for="passcode">Enter Passcode:</label><br>
                 <input type="text" name="passcode" placeholder="Enter Username" required><br>
-                <input type="submit" value="Submit">
+                <input type="submit" value="Get Access">
             </form> 
-
+        </div>
             <% if(typeof(errors)=='object' && errors) {%>
 
                 <ul>
@@ -45,6 +49,6 @@
 
                 <% } %>
 
-        </div>
+       
     </body>
 </html>

@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>Log In</title>
+        <title><%= title %></title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="/stylesheets/style.css">
     </head>
@@ -11,7 +11,7 @@
     
             <div class="header">
                 <div class="title">
-                  <a href="/"><h1><%= title %></h1></a>
+                  <a href="/"><h1>Speak Your Mind</h1></a>
                 </div> 
                 <div class="links">
                   <% if(typeof(user)=="object" && user) { %>
@@ -25,6 +25,10 @@
                 </div>
               </div>
 
+              <div class="form-title">
+                <h1>Log In</h1>
+              </div>
+              
         <div class="log-in">
             <form action="/login" method="POST">
                 <label for="username">Username:</label><br>

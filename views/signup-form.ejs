@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>Sign Up</title>
+        <title><%= title %></title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="/stylesheets/style.css">
     </head>
@@ -10,7 +10,7 @@
     <body>
         <div class="header">
             <div class="title">
-              <a href="/"><h1><%= title %></h1></a>
+              <a href="/"><h1>Speak Your Mind</h1></a>
             </div> 
             <div class="links">
               <% if(typeof(user)=="object" && user) { %>
@@ -24,11 +24,9 @@
             </div>
           </div>
 
-          <div class="site-desc">
-              <h1>Enter New User Info</h1>
-
-          </div>
-
+        <div class="form-title">
+            <h1>Enter New User Info</h1>
+        </div>
         <div class="sign-up">
             <form action="/signup" method="POST">
                 <label for="first_name">First Name:</label><br>
