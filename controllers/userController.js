@@ -6,7 +6,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const {body,validationResult} = require('express-validator');
 
 exports.user_create_get= function(req,res,next){
-    res.render("signup-form", {title: "Members Only Board"});
+    res.render("signup-form", {title: "Speak Your Mind"});
 };
 
 exports.user_create_post= [
@@ -18,13 +18,19 @@ exports.user_create_post= [
     .isAlphanumeric().withMessage("Last Name Can Only Contain Alphanumeric Characters"),
     body('username').trim().isLength({min:1}).escape().withMessage("Username Must Be Specified"),
     body('password').trim().isLength({min:1}).escape().withMessage("Password Must Be Specified"),
+    body('password_confirm').trim().isLength({min:1}).escape().withMessage("Password Must Be Specified"),
 
     (req,res,next)=>{
 
         const errors = validationResult(req);
 
         if(!errors.isEmpty()){
-            res.render("signup-form",{title: "Members Only", errors: errors.array()});
+            res.render("signup-form",{title: "Speak Your Mind", errors: errors.array()});
+            return;
+        };
+
+        if(req.body.password !== req.body.password_confirm){
+            res.render("signup-form",{title: "Speak Your Mind", error: "Password must match"});
             return;
         };
 
@@ -50,7 +56,7 @@ exports.user_create_post= [
     }];
 
     exports.user_login_get=function(req,res,next){
-        res.render('login-form',{title: "Members Only Board"});
+        res.render('login-form',{title: "Speak Your Mind"});
     };
 
 
@@ -58,6 +64,14 @@ exports.user_create_post= [
         req.logout();
 
         res.redirect('/');
+    };
+
+    exports.user_upgrade_get= function(req,res){
+        res.send('USER UPGRADE GET NOT IMPLEMENTED');
+    };
+
+    exports.user_upgrade_post=function(req,res){
+        res.send('USER UPGRADE POST NOT IMPLEMENTED');
     };
 
    

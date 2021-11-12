@@ -8,39 +8,75 @@
 
     <div class="header">
       <div class="title">
-        <p><a href="/">Members Only Board</a></p>
+        <a href="/"><h1><%= title %></h1></a>
       </div> 
       <div class="links">
-      <% if(typeof(user)=="object" && user) { %>
-        <p>Welcome Back <%= user.username %></p>
-        <a href='/logout'><button>Log Out</button></a>
-        <% } else {%>
-        <a href="/login"><button>Sign In</button></a>
-        <a href="/signup"><button>Sign Up</button></a>
+        <% if(typeof(user)=="object" && user) { %>
+          <p>Welcome Back <%= user.username %></p>
+          <a href='/logout'><button>Log Out</button></a>
+          <% } else {%>
+          <a href="/login"><button>Sign In</button></a>
+          <a href="/signup"><button>Join</button></a>
 
-        <% } %>
+          <% } %>
+      </div>
     </div>
-  </div>
 
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div class="site-desc">
+      <p>
+        "Speak Your Mind" is a place where members can post whatever is on their minds in an anonymous setting.<br>
+        Messages are up for everyone to see, but if you want to join the club and see info such as post authors, <br>
+        and have the ability to post to the board yourself, feel free to join the club.
+      </p>
+    </div>
 
-    <div class=messages>
+    
+
+
+    <div class="message-list">
+
+      <h1>Message Board:</h1>
 
       <% if(typeof(messages)=='object' && messages) { %>
-        <% for(let i=0; i<messages.length; i++) { %>
-          <p>messages[i].text</p>
+
+        <% for(let i=0; i<messages.length; i++) { %> 
+
+          <div class="message">
+            <div class="message-header">
+            <% if(typeof(user)=='object'&& user && user.membership_status != "Visitor") { %>
+              <p class="message-author"><%= messages[i].author %> posted:</p><br>
+            <% } else {  %>
+              <p>Anonymous posted:</p><br>
+            <% } %>
+              <p><%= messages[i].formatted_timestamp%></p>
+            </div>
+            <div class= "message-body">
+              <p class="message-title"> <%= messages[i].title%></p>
+              <p class="message-text"><%= messages[i].text %></p>
+            </div>
+            <div class="message-footer">
+              <% if(typeof(user)=='object'&& user && user.membership_status === "Admin") { %>
+                <a href="/message/delete"><button>Delete Post</button></a>
+                <% } %>
+
+            </div>
+          </div>
+        
         <% } %>
-        <% } %>
+      <% } %>
 
     </div>
 
-    <% if(typeof(user)=='object' && user) { %>
+    <% if(typeof(user)=='object' && user && user.membership_status != "Visitor") { %>
 
       <div class='message-links'>
         <a href='/message/create'><button>Create New Message</button></a>
       </div>
 
+      <% } %> 
+      <% if(typeof(user)=='object' && user && user.membership_status === "Visitor") { %>
+        <p>Want To Post To The Board?</p>
+        <a href="/user/join"><button>Join The Club</button></a>
       <% } %>
    
 

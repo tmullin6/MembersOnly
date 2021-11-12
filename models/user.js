@@ -7,13 +7,12 @@ const UserSchema = new Schema(
         last_name: {type: String, required: true, maxLength: 100},
         username: {type: String, required: true},
         password: {type: String, required: true},
-        membership_status: {type: String, default:"User", required: true},
-        messages: {type: Schema.Types.ObjectId, ref: "Message"}
+        membership_status: {type: String, default:"Visitor", required: true},
     }
 );
 
 UserSchema.virtual('name').get(function(){
-    return this.first_name+' '+this.last_name;
+    return this.first_name+','+this.last_name;
 });
 
 UserSchema.virtual('url').get(function(){

@@ -8,21 +8,22 @@
     </head>
 
     <body>
-        <div class="header">
-            <div class="title">
-                <p><a href="/">Members Only Board</a></p>
-            </div> 
-            <div class="links">
-                <% if(typeof(user)=="object" && user) { %>
-                  <p>Welcome Back <%= user.username %></p>
-                  <a href='/logout'><button>Log Out</button></a>
-                  <% } else {%>
-                  <a href="/login"><button>Sign In</button></a>
-                  <a href="/signup"><button>Sign Up</button></a>
-        
-                  <% } %>
+    
+            <div class="header">
+                <div class="title">
+                  <a href="/"><h1><%= title %></h1></a>
+                </div> 
+                <div class="links">
+                  <% if(typeof(user)=="object" && user) { %>
+                    <p>Welcome Back <%= user.username %></p>
+                    <a href='/logout'><button>Log Out</button></a>
+                    <% } else {%>
+                    <a href="/login"><button>Sign In</button></a>
+                    <a href="/signup"><button>Join</button></a>
+          
+                    <% } %>
+                </div>
               </div>
-        </div>
 
         <div class="log-in">
             <form action="/login" method="POST">
